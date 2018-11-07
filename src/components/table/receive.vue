@@ -3,7 +3,7 @@
     <div class="content" v-for="item in content">
       <textarea v-model="item.content"></textarea>
        <h3>发送人：{{item.sendUser.name}}</h3>
-        <el-button type="primary" style="margin-left: 40%;margin-bottom: 10px;" v-for="info in item.receivers"  @click="changeStatus(item.id,info.user.id)">确认</el-button>
+        <el-button type="primary" style="margin-left: 70%;margin-top: 5px;" v-for="info in item.receivers"  @click="changeStatus(item.id,info.user.id)" :key="info in item.receivers">确认</el-button>
     </div>
     </div>
 </template>
@@ -15,7 +15,7 @@
         data(){
           return{
             content:[],
-            userId:1
+            userId:2
           }
         },
     created(){
@@ -41,14 +41,16 @@
 
 <style scoped>
 textarea{
-  width:60%;
-  height:60px;
+  height: 20%;
+  width: 62%;
   margin-left:25%;
-  border: 2px solid black;
+  border: 0.5px solid black;
   margin-top: 10%;
+  border-radius: 5px;
   resize: none;
 }
   h3{
     margin-left: 25%;
+    position: absolute;
   }
 </style>

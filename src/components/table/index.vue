@@ -6,15 +6,15 @@
       <el-checkbox v-for="item in list" :label="item.name" :key="item.name" style="margin-left: 45px;"
                    @change="handleCheck(item)"></el-checkbox>
     </el-checkbox-group>
-    <el-button type="primary" style="margin-left: 25%;margin-top: 5%;" @click="add">新增人员</el-button>
-    <el-button type="primary" style="margin-left: 2%;margin-top: 5%;" @click="btn">发送</el-button>
+    <!--<el-button type="primary" style="margin-left: 25%;margin-top: 5%;" @click="add">新增接收人员</el-button>-->
+    <el-button type="primary" style="margin-left:42%;margin-top: 10px;" @click="btn">发送</el-button>
     <div class="aDiv" v-for="item in contentList">
       <div class="left">
         <p>{{item.content}}</p>
       </div>
       <div class="right" v-for="info in item.receivers">
-        <h3 style="position: absolute;margin-top: 31%;margin-left: 4px;">{{info.user.name}}</h3>
-        <el-button type="text" style="margin-left: 43px;margin-top: 22%;font-size: 20px;font-weight: bolder">{{ Status(info.readed)}}</el-button>
+        <h3 style="position: absolute;margin-top: 21%;margin-left: 4px;font-size: 14px;">接收人:{{info.user&&info.user.name}}</h3>
+        <el-button type="text" style="margin-left: 75px;margin-top: 9%;font-size: 16px;font-weight: bolder">{{ Status(info.readed)}}</el-button>
       </div>
     </div>
     <el-dialog
@@ -87,9 +87,17 @@
       })
       },
       handleCheck(item) {
-        this.user.id = item.id;
-        this.user.name = item.name;
-        this.user.phone = item.phone;
+        // this.user.id = item.id;
+        // this.user.name = item.name;
+        // this.user.phone = item.phone;
+        if(item.name===this.message.sendUser.name)
+        {
+          this.callback("您不能发送给自己")
+        }else{
+          this.user.id = item.id;
+          this.user.name = item.name;
+          this.user.phone = item.phone;
+        }
       },
       Status(readed){
         return readed === ReadType.noRead ? '未读' : "已读";
@@ -113,7 +121,8 @@
         this.dialogVisible = false;
         addUser(this.form).then(() => {
           this.callback("添加成功")
-        })
+        });
+        history.go(0);
         this._getUserList(this.page);
       }
     }
@@ -125,7 +134,6 @@
     resize: none;
     height: 20%;
     width: 62%;
-    border: 2px solid black;
     margin-left: 20%;
     margin-top: 10%;
     border-radius: 5px;
@@ -138,9 +146,9 @@
   }
 
   .aDiv {
-    height: 100px;
+    height: 60px;
     width: 70%;
-    margin-left: 15%;
+    margin-left: 16.5%;
     margin-top: 5%;
     position: relative;
     border: 1px solid black;
