@@ -18,13 +18,13 @@ export function sendMessage(data) {
   })
 }
 
-export function  addUser(data) {
-  return request({
-    url:'/users',
-    method:'post',
-    data
-  })
-}
+// export function  addUser(data) {
+//   return request({
+//     url:'/users',
+//     method:'post',
+//     data
+//   })
+// }
 
 export  function userMessage(userId) {
   return request({

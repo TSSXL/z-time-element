@@ -3,45 +3,45 @@
     <textarea v-model="msg"></textarea>
     <div style="margin: 15px 0;"></div>
     <el-checkbox-group v-model="checkedCities" style="margin-left:9%;">
-      <el-checkbox v-for="item in list" :label="item.name" :key="item.name" style="margin-left: 45px;"
+      <el-checkbox v-for="item in list"  :label="item.name" :key="item.name" style="margin-left: 45px;"
                    @change="handleCheck(item)"></el-checkbox>
     </el-checkbox-group>
-    <!--<el-button type="primary" style="margin-left: 25%;margin-top: 5%;" @click="add">新增接收人员</el-button>-->
     <el-button type="primary" style="margin-left:42%;margin-top: 10px;" @click="btn">发送</el-button>
     <div class="aDiv" v-for="item in contentList">
       <div class="left">
         <p>{{item.content}}</p>
       </div>
       <div class="right" v-for="info in item.receivers">
-        <h3 style="position: absolute;margin-top: 21%;margin-left: 4px;font-size: 14px;">接收人:{{info.user&&info.user.name}}</h3>
-        <el-button type="text" style="margin-left: 75px;margin-top: 9%;font-size: 16px;font-weight: bolder">{{ Status(info.readed)}}</el-button>
+          <h3 style="font-size: 14px;display: inline-block;">{{info.user&&info.user.name}}</h3>
+          <el-button  type="text" style="margin-left: 5px;text-indent: 5px;" >{{ Status(info.readed)}}</el-button>
       </div>
     </div>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="80%">
-      <el-form v-model="form">
-        <el-form-item label="姓名">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号">
-          <el-input v-model="form.phone"></el-input>
-        </el-form-item>
-      </el-form>
-      <el-button @click="dialogVisible = false" style="margin-left: 20%;">取 消</el-button>
-      <el-button type="primary" @click="dialogConfime()">确 定</el-button>
-    </el-dialog>
+    <!--<el-dialog-->
+      <!--title="提示"-->
+      <!--:visible.sync="dialogVisible"-->
+      <!--width="80%">-->
+      <!--<el-form v-model="form">-->
+        <!--<el-form-item label="姓名">-->
+          <!--<el-input v-model="form.name"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item label="手机号">-->
+          <!--<el-input v-model="form.phone"></el-input>-->
+        <!--</el-form-item>-->
+      <!--</el-form>-->
+      <!--<el-button @click="dialogVisible = false" style="margin-left: 20%;">取 消</el-button>-->
+      <!--<el-button type="primary" @click="dialogConfime()">确 定</el-button>-->
+    <!--</el-dialog>-->
   </div>
 </template>
 
 <script>
   import {ERR_OK, ReadType} from 'api/config';
-  import {getUserList, sendMessage, addUser,userMessage} from "../../api/time";
+  import {getUserList, sendMessage,userMessage} from "../../api/time";
 
   export default {
     data() {
       return {
+        tmp:[],
         msg: "",
         dialogVisible: false,
         list: [],
@@ -63,12 +63,7 @@
           }
         },
         form: {},
-        user: {
-          id: "",
-          name: "",
-          phone: ""
-        },
-          userId:1,
+          userId:1
       }
     },
     created() {
@@ -83,20 +78,18 @@
       },
       _getUserMsgList(userId){
       userMessage(userId).then((ops)=>{
-      this.contentList=ops;
+      this.contentList=ops.reverse();
       })
       },
       handleCheck(item) {
-        // this.user.id = item.id;
-        // this.user.name = item.name;
-        // this.user.phone = item.phone;
         if(item.name===this.message.sendUser.name)
         {
           this.callback("您不能发送给自己")
         }else{
-          this.user.id = item.id;
-          this.user.name = item.name;
-          this.user.phone = item.phone;
+         this.tmp.push({
+           readed: false,
+           user:item
+         })
         }
       },
       Status(readed){
@@ -107,11 +100,12 @@
       },
       btn() {
         this.message.content = this.msg;
-        this.message.receivers[0].user=this.user;
+        this.message.receivers=this.tmp;
         sendMessage(this.message).then(() => {
           this.callback("发送成功");
           this.msg="";
         })
+        history.go(0)
       },
       add() {
         this.dialogVisible = true;
@@ -122,8 +116,6 @@
         addUser(this.form).then(() => {
           this.callback("添加成功")
         });
-        history.go(0);
-        this._getUserList(this.page);
       }
     }
   }
@@ -160,12 +152,13 @@
     width: 60%;
     position: absolute;
     border-right: 1px solid black;
+    word-break:break-all;
   }
 
   .right {
-    height: 100%;
+    height: 32%;
     width: 40%;
-    margin-left: 60%;
-    position: absolute;
+    margin-left: 62%;
+    /*position: absolute;*/
   }
 </style>

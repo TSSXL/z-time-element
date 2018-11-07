@@ -1,10 +1,11 @@
 <template>
-    <div class="receive">
+    <div class="receive" >
     <div class="content" v-for="item in content">
-      <textarea v-model="item.content"></textarea>
+      <textarea  disabled>{{item.content}}</textarea>
        <h3>发送人：{{item.sendUser.name}}</h3>
-        <el-button type="primary" style="margin-left: 70%;margin-top: 5px;" v-for="info in item.receivers"  @click="changeStatus(item.id,info.user.id)" :key="info in item.receivers">确认</el-button>
+        <el-button  type="primary" style="margin-left: 70%;margin-top: 5px;" v-for="info in item.receivers"  @click="changeStatus(item.id,info.user.id)" :key="info in item.receivers">确认</el-button>
     </div>
+      <div style="height:80px;width:100%;"></div>
     </div>
 </template>
 
@@ -24,7 +25,7 @@
     methods:{
           _getReceiveMsg(userId){
            receiveMessage(userId).then((ops)=>{
-           this.content=ops;
+           this.content=ops.reverse();
            })
       },
       callback(text) {
@@ -45,9 +46,12 @@ textarea{
   width: 62%;
   margin-left:25%;
   border: 0.5px solid black;
-  margin-top: 10%;
+  margin-top: 5%;
   border-radius: 5px;
   resize: none;
+}
+textarea:disabled{
+  background-color: #FFFFFF;
 }
   h3{
     margin-left: 25%;
