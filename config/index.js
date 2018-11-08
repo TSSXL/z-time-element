@@ -64,7 +64,6 @@ module.exports = {
      * In most cases please use '/' !!!
      */
     assetsPublicPath: '/vueAdmin-template/', // If you are deployed on the root path, please use '/'
-
     /**
      * Source Maps
      */

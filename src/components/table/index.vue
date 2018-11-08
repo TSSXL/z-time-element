@@ -58,7 +58,7 @@
           ],
           sendUser: {
             id: 1,
-            name: "aaa",
+            name: "小A",
             phone: "123"
           }
         },
@@ -91,6 +91,7 @@
            user:item
          })
         }
+        console.log(this.tmp)
       },
       Status(readed){
         return readed === ReadType.noRead ? '未读' : "已读";
