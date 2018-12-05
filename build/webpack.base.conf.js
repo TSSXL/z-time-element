@@ -27,9 +27,7 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: "./"
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -41,7 +39,7 @@ module.exports = {
       'common':resolve('src/common'),
       'components':resolve('src/components'),
       'store':resolve('src/store'),
-      'graphql':resolve('src/graphql')
+      'graph':resolve('src/graphql')
     }
   },
   module: {
@@ -52,6 +50,12 @@ module.exports = {
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
+
+{
+  test: /\.(graphql|gql)$/,
+    exclude: /node_modules/,
+  loader: 'graphql-tag/loader'
+},
       {
         test: /\.js$/,
         loader: 'babel-loader',

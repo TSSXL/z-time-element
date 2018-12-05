@@ -1,0 +1,102 @@
+query userList{
+  UserList{
+    content{
+      id
+      nickname
+      password
+      phone
+    }
+  }
+}
+
+query RemessageList($qfilter:qfilter){
+  MessageList(qfilter:$qfilter){
+    content{
+      id
+      content
+      receivers{
+        readed
+        user{nickname,id}
+      }
+      sendUser{
+        id
+        nickname
+      }
+    }
+  }
+}
+
+
+mutation sendMessage($message:Message_!){
+  messages_sendMessage(message:$message){
+    content
+    title
+    receivers{
+      user{
+        id
+      }
+      readed
+    }
+    sendUser{
+      id
+    }
+  }
+}
+
+mutation changeReaded($messageId:String!,$userId:String!){
+  messages_userReaded(messageId:$messageId,userId:$userId)
+}
+
+query messageList($qfilter:qfilter){
+  MessageList(qfilter:$qfilter){
+    content{
+      content
+      id
+      receivers{
+        id
+        readed
+        user{
+          id
+          nickname
+        }
+      }
+      sendUser{
+        id
+        nickname
+      }
+    }
+  }
+}
+
+
+query readedMSg($qfilter:qfilter){
+  MessageList(qfilter:$qfilter){
+    totalElements
+    content{
+      content
+      id
+      receivers{
+        readed
+        id
+        user{
+          id
+          nickname
+        }
+      }
+    }
+  }
+}
+
+
+query msg($qfilter:qfilter){
+  MessageList(qfilter:$qfilter){
+    content{
+      id
+      content
+      sendUser{
+        id
+        nickname
+      }
+    }
+  }
+}

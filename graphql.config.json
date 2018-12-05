@@ -23,8 +23,8 @@
   "README_endpoints": "A list of GraphQL endpoints that can be queried from '.graphql' files in the IDE",
   "endpoints" : [
     {
-      "name": "Default (http://120.79.40.85:8080/graphql)",
-      "url": "http://120.79.40.85:8080/graphql",
+      "name": "Default (http://120.79.40.85:9090/graphql)",
+      "url": "http://120.79.40.85:9090/graphql",
       "options" : {
         "headers": {
           "user-agent" : "JS GraphQL"

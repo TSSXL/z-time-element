@@ -10,6 +10,15 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'dashboard',
+  data(){
+    return{
+      name:"hh"
+    }
+  },
+  created(){
+    let name=this.$route.push.name;
+    console.log(name)
+  },
   computed: {
     ...mapGetters([
       'name',

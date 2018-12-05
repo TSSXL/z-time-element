@@ -48,18 +48,60 @@ export const constantRouterMap = [
     name: 'Example',
     meta: { title: 'Example', icon: 'example' },
     children: [
+  //     {
+  //       path: 'post',
+  //       name: 'Post',
+  //       component: _import('table/index'),
+  //       meta: { title: '发送', icon: 'table' }
+  //     },
       {
-        path: 'post',
-        name: 'Post',
-        component: _import('table/index'),
-        meta: { title: '发送', icon: 'table' }
+        path: 'all',
+        name: 'All',
+        component: _import('table/all'),
+        meta: { title: '发', icon: 'table' }
       },
-       {
-    path: 'receive',
-      name: 'Receive',
-    component: _import('table/receive'),
-    meta: { title: '接收', icon: 'table' }
-  }
+      {
+        path: 'user',
+        name: 'User',
+        component: _import('table/userInfo'),
+        meta: { title: '个人信息', icon: 'table' },
+        hidden:true
+      },
+      {
+        path: 'edit',
+        name: 'Edit',
+        component: _import('table/edit'),
+        meta: { title: '发消息', icon: 'table' },
+        hidden:true
+      },
+      {
+        path: 'read',
+        name: 'Read',
+        component: _import('table/read'),
+        meta: { title: '已读', icon: 'table' },
+        hidden:true
+      },
+      {
+        path: 'noRead',
+        name: 'NoRead',
+        component: _import('table/noRead'),
+        meta: { title: '未读', icon: 'table' },
+        hidden:true
+      },
+      {
+        path: 'res',
+        name: 'Res',
+        component: _import('table/res'),
+        meta: { title: '读消息', icon: 'table' },
+        hidden:true
+      },
+      {
+        path: 'msg',
+        name: 'Msg',
+        component: _import('table/msg'),
+        meta: { title: '详情', icon: 'table' },
+        hidden:true
+      }
     ]
   },
 

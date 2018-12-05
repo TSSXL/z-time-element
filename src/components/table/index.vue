@@ -3,120 +3,119 @@
     <textarea v-model="msg"></textarea>
     <div style="margin: 15px 0;"></div>
     <el-checkbox-group v-model="checkedCities" style="margin-left:9%;">
-      <el-checkbox v-for="item in list"  :label="item.name" :key="item.name" style="margin-left: 45px;"
-                   @change="handleCheck(item)"></el-checkbox>
+      <el-checkbox v-for="item in list.content"  :label="item.nickname" :key="item.nickname" style="margin-left: 49px;"
+                   @change="handleCheck(item)" ></el-checkbox>
     </el-checkbox-group>
     <el-button type="primary" style="margin-left:42%;margin-top: 10px;" @click="btn">发送</el-button>
-    <div class="aDiv" v-for="item in contentList">
+    <div class="aDiv" v-for="item in contentList.content">
       <div class="left">
         <p>{{item.content}}</p>
       </div>
       <div class="right" v-for="info in item.receivers">
-          <h3 style="font-size: 14px;display: inline-block;">{{info.user&&info.user.name}}</h3>
+          <h3 style="font-size: 14px;display: inline-block;">{{info.user&&info.user.nickname}}</h3>
           <el-button  type="text" style="margin-left: 5px;text-indent: 5px;" >{{ Status(info.readed)}}</el-button>
       </div>
     </div>
-    <!--<el-dialog-->
-      <!--title="提示"-->
-      <!--:visible.sync="dialogVisible"-->
-      <!--width="80%">-->
-      <!--<el-form v-model="form">-->
-        <!--<el-form-item label="姓名">-->
-          <!--<el-input v-model="form.name"></el-input>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item label="手机号">-->
-          <!--<el-input v-model="form.phone"></el-input>-->
-        <!--</el-form-item>-->
-      <!--</el-form>-->
-      <!--<el-button @click="dialogVisible = false" style="margin-left: 20%;">取 消</el-button>-->
-      <!--<el-button type="primary" @click="dialogConfime()">确 定</el-button>-->
-    <!--</el-dialog>-->
   </div>
 </template>
 
 <script>
   import {ERR_OK, ReadType} from 'api/config';
-  import {getUserList, sendMessage,userMessage} from "../../api/time";
+  import timeGraphql from 'graph/time.graphql';
 
   export default {
     data() {
       return {
         tmp:[],
         msg: "",
-        dialogVisible: false,
+        content:[],
         list: [],
         checkedCities: [],
         contentList: [],
         page: 0,
+        size:50,
         message: {
           content: "",
+          title:"",
           receivers: [
             {
-              readed: false,
               user: {}
             }
           ],
           sendUser: {
-            id: 1,
-            name: "小A",
-            phone: "123"
+            id:  "Aqb8ew5uHy6V4TORX93Uw1U01"
+            // 这是小A
           }
-        },
-        form: {},
-          userId:1
+        }
       }
     },
-    created() {
-      this._getUserList(this.page);
-      this._getUserMsgList(this.userId);
+    apollo:{
+      list: {
+        query: timeGraphql.UserList,
+        update: data => data.UserList,
+        variables(){
+          return {
+            user:{
+              page:this.page,
+              size:this.size
+            }
+          }
+        }
+      },
+      contentList:{
+        query: timeGraphql.messageList,
+        update: data => data.MessageList,
+        variables(){
+          return {
+            messageList:{
+              page:this.page,
+              size:this.size
+            },
+            b:{
+              key: "sendUser.id",
+              operator: "EQUEAL",
+              value: "Aqb8ew5uHy6V4TORX93Uw1U01"
+            }
+          }
+        }
+      }
     },
     methods: {
-      _getUserList(page) {
-        getUserList(page).then((ops) => {
-          this.list = ops.content;
-        })
-      },
-      _getUserMsgList(userId){
-      userMessage(userId).then((ops)=>{
-      this.contentList=ops.reverse();
-      })
-      },
-      handleCheck(item) {
-        if(item.name===this.message.sendUser.name)
+      handleCheck(item,index) {
+        if(item.id===this.message.sendUser.id)
         {
-          this.callback("您不能发送给自己")
+          this.callback("您不能发送给自己");
         }else{
          this.tmp.push({
-           readed: false,
-           user:item
+           user:{id:item.id}
          })
         }
-        console.log(this.tmp)
       },
       Status(readed){
         return readed === ReadType.noRead ? '未读' : "已读";
       },
       callback(text) {
         this.$message.success(text);
+        setTimeout(()=>{
+          this.$apollo.queries.contentList.refetch();
+        },100)
       },
       btn() {
         this.message.content = this.msg;
         this.message.receivers=this.tmp;
-        sendMessage(this.message).then(() => {
-          this.callback("发送成功");
-          this.msg="";
-        })
-        history.go(0)
+        this.addTag();
+        this.checkedCities=[];
       },
-      add() {
-        this.dialogVisible = true;
-        this.form = {};
-      },
-      dialogConfime() {
-        this.dialogVisible = false;
-        addUser(this.form).then(() => {
-          this.callback("添加成功")
+      addTag(){
+        this.$apollo.mutate({
+          mutation: timeGraphql.sendMessage,
+          variables:{
+            message:this.message
+          },
         });
+        this.callback("添加成功");
+        this.message={};
+        this.msg="";
       }
     }
   }
@@ -154,12 +153,13 @@
     position: absolute;
     border-right: 1px solid black;
     word-break:break-all;
+    overflow: auto;
   }
 
   .right {
-    height: 32%;
+    height: 30%;
     width: 40%;
     margin-left: 62%;
-    /*position: absolute;*/
+    margin-top: -2px;
   }
 </style>

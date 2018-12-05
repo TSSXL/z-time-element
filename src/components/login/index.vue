@@ -31,9 +31,10 @@
 
 <script>
 import { isvalidUsername } from 'common/js/validate'
+import  {user} from "../../common/js/mixins";
+import timeGraphql from 'graph/time.graphql'
 
 export default {
-  name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
@@ -52,26 +53,27 @@ export default {
     return {
       loginForm: {
         username: "",
-        password:""
+        password:"",
+        id:"",
+        phone:""
       },
+      userList:[],
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
       pwdType: 'password',
-      permission:[
-        {
-          username:"MrsZ",
-          password:"MrsZ123456"
-        },
-        {
-          username:"MrL",
-          password:"MrL123456"
-        }
-      ]
+      userList:[]
     }
   },
+  apollo:{
+    userList: {
+      query: timeGraphql.userList,
+      update: data => data.UserList.content,
+    },
+  },
+  mixins:[user],
   methods: {
     showPwd() {
       if (this.pwdType === 'password') {
@@ -85,15 +87,15 @@ export default {
     },
     handleLogin() {
       this.loading=true;
-      if(this.loginForm.username==this.permission[0].username&&this.loginForm.password==this.permission[0].password || this.loginForm.username==this.permission[1].username&&this.loginForm.password==this.permission[1].password )
+      for (var i=0;i<this.userList.length;i++)
       {
-         this.$router.push({path:'/dashboard'})
-      }else if(this.loginForm.username==null || this.loginForm.password==null){
-        this.loading=false;
-        this.callback("请输入信息")
-      }else {
-        this.loading=false;
-        this.callback("您没有权限")
+        if (this.loginForm.username===this.userList[i].nickname&&this.loginForm.password==="12345") {
+          this.loginForm=this.userList[i];
+          this.$router.push({path:'/example/all',query:{loginForm:this.loginForm}})
+          this.saveUserMessage(this.loginForm);
+        }else{
+          this.loading=false;
+        }
       }
     }
   }

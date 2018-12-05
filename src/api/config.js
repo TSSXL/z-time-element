@@ -5,7 +5,7 @@
 
 export const ERR_OK = 0;
 
-export const baseURL = 'http://120.79.40.85:8080/';
+export const baseURL = 'http://120.79.40.85:9090';
 
 export const ReadType={
   'readed':true,

@@ -5,12 +5,13 @@
     <div class="main-container">
       <navbar></navbar>
       <app-main></app-main>
+      <Foo-main></Foo-main>
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, AppMain,FooMain} from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -18,7 +19,8 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    FooMain
   },
   mixins: [ResizeMixin],
   computed: {
@@ -51,6 +53,7 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
+    background-color: #f0fffc;
   }
   .drawer-bg {
     background: #000;

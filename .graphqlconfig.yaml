@@ -3,9 +3,9 @@ projects:
     schemaPath: src/mock/schema/schema.graphql
     extensions:
       endpoints:
-        dev: http://115.159.154.194:8080/graphql
+        dev: http://115.159.154.194:9090/graphql
   json:
     schemaPath: src/mock/schema/schema.json
     extensions:
       endpoints:
-        dev: http://115.159.154.194:8080/graphql
+        dev: http://115.159.154.194:9090/graphql

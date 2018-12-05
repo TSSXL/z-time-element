@@ -4,17 +4,17 @@
     <breadcrumb></breadcrumb>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
-        <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+        <span style="display: inline-block;height:40px;width:60px;text-indent: 25px;font-size: 20px;">{{username.nickname}}</span>
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
         <router-link class="inlineBlock" to="/">
           <el-dropdown-item>
-            Home
+            登录页面
           </el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
-          <span @click="logout" style="display:block;">LogOut</span>
+          <span @click="logout" style="display:block;">退出</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -27,6 +27,11 @@ import Breadcrumb from 'base/Breadcrumb'
 import Hamburger from 'base/Hamburger'
 
 export default {
+  data(){
+    return{
+      msg:"a",
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger
@@ -35,16 +40,22 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar'
-    ])
+    ]),
+    username(){
+      return JSON.parse(this.$store.state.user.token);
+    }
   },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('ToggleSideBar')
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+  this.$store.dispatch('LogOut',()=>{
+        location.reload()
+  })
+          // removeToken();
+      // 为了重新实例化vue-router对象 避免bug
+
     }
   }
 }
