@@ -22,12 +22,15 @@
       },
       methods:{
         send(){
+          location.reload();
           this.$router.push({path:'/example/all'})
         },
         res(){
+          location.reload();
           this.$router.push({path:'/example/res'})
         },
         useInfo(){
+          location.reload();
           this.$router.push({path:'/example/user'})
         }
       }

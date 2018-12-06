@@ -10,7 +10,6 @@ import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import App from './App'
 import router from './router'
 import store from './store'
-import apollo from './apollo'
 
 import '@/icons' // icon
 //import '@/permission' // permission control

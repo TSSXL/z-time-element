@@ -86,9 +86,10 @@
   }
   span{
     display: inline-block;
-    height:60px;
+    height:150px;
     width:100%;
     border-bottom: 1px solid black;
     line-height: 30px;
+    overflow: auto;
   }
 </style>

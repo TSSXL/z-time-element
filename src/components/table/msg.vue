@@ -4,7 +4,7 @@
         <div style="height:70%;width:100%;overflow: auto;font-size: 24px;">
           {{item.content}}
         </div>
-        <el-button type="primary" style="margin-top: 25%;margin-left: 35%;" @click="readed(item.id)">确认</el-button>
+        <el-button type="primary" style="margin-top: 22%;margin-left: 35%;" @click="readed(item.id)">确认</el-button>
       </div>
 
     </div>
@@ -61,6 +61,8 @@
               },
             });
             this.callback("您已阅读");
+            location.reload();
+            this.$router.push({path:'/example/res'})
           }
       }
     }

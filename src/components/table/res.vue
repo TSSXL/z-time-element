@@ -6,7 +6,7 @@
              {{format(item.content)}}<br>发送人：{{item.sendUser&&item.sendUser.nickname}}
            </div>
               <div style="height:60px;width:180px;margin-top: -60px;margin-left: 150px;border-bottom: 1px solid black">
-                <el-button  type="primary" style="margin:10px 40px;" @click="goMsg(item)">{{Status(item.receivers)}}</el-button>
+                <el-button  type="primary" style="margin:10px 60px;" @click="goMsg(item)">{{Status(item.receivers)}}</el-button>
               </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
               item.receivers=tmp;
              return item;
             })
-            return arr;
+            return arr.reverse();
           },
           variables(){
             return {

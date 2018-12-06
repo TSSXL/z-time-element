@@ -32,7 +32,11 @@
       apollo:{
         list: {
           query: timeGraphql.messageList,
-          update: data=>data.MessageList.content,
+          // update: data=>data.MessageList.content,
+          update:function(data){
+            const arr=data.MessageList.content;
+            return arr.reverse();
+          },
           variables(){
             return {
               qfilter:{
@@ -44,11 +48,6 @@
           }
         }
       },
-    watch:{
-          list(val,oldVal){
-            // console.log(val,oldVal)
-          }
-    },
       methods:{
           format(content){
             return content=content.substring(0,20)

@@ -32,14 +32,14 @@
           // update: data => data.MessageList.content,
           update:function (data) {
             const tmpArr = data.MessageList.content;
-            const arr = tmpArr.map(item =>{
-              const tmp = item.receivers.filter(info =>{
-                return info.readed===true;
-              });
-              item.receivers = tmp;
-              return item;
+            const arr=tmpArr.map(item=>{
+                 const tmp=item.receivers.filter(info=>{
+                  return  info.readed===true;
+                 });
+                 item.receivers=tmp;
+                 return item;
             })
-            return arr;
+            return tmpArr;
           },
           variables(){
             return {
@@ -86,9 +86,10 @@ textarea {
 }
   span{
     display: inline-block;
-    height:60px;
+    height:150px;
     width:100%;
     border-bottom: 1px solid black;
     line-height: 30px;
+    overflow: auto;
   }
 </style>

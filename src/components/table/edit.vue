@@ -70,7 +70,9 @@
               message:this.message
             },
           });
-          this.callback("添加成功");
+          this.callback("发送成功");
+          location.reload();
+          this.$router.push({path:'/example/all'});
           this.message={};
           this.msg="";
         }
