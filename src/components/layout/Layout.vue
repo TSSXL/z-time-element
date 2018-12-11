@@ -5,13 +5,13 @@
     <div class="main-container">
       <navbar></navbar>
       <app-main></app-main>
-      <Foo-main></Foo-main>
+      <Foo></Foo>
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain,FooMain} from './components'
+import { Navbar, Sidebar, AppMain,Foo} from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -20,7 +20,7 @@ export default {
     Navbar,
     Sidebar,
     AppMain,
-    FooMain
+    Foo
   },
   mixins: [ResizeMixin],
   computed: {

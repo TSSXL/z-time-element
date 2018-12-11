@@ -2,11 +2,11 @@
     <div class="res">
       <div style="height:100%;width:100%;overflow: auto;border-bottom: 1px solid black">
         <div v-for="item in list">
-           <div style="width:160px;height:68px;border-right:1px solid black;font-size: 14px;line-height: 30px;overflow: auto;border-bottom: 1px solid black">
+           <div style="width:180px;height:68px;border-right:1px solid black;font-size: 14px;line-height: 30px;overflow: auto;border-bottom: 1px solid black">
              {{format(item.content)}}<br>发送人：{{item.sendUser&&item.sendUser.nickname}}
            </div>
-              <div style="height:60px;width:180px;margin-top: -60px;margin-left: 150px;border-bottom: 1px solid black">
-                <el-button  type="primary" style="margin:10px 60px;" @click="goMsg(item)">{{Status(item.receivers)}}</el-button>
+              <div style="height:60px;width:151px;margin-top: -60px;margin-left: 180px;border-bottom: 1px solid black;border-right: 1px solid black;">
+                <el-button  type="primary" style="margin:10px 30px;" @click="goMsg(item)">{{Status(item.receivers)}}</el-button>
               </div>
         </div>
       </div>

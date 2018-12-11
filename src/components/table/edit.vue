@@ -17,10 +17,12 @@
         name: "edit",
       data(){
           return{
+            title:"",
             msg:"",
             list:[],
             tmp:[],
             message: {
+             title:"",
               content: "",
               receivers: [
                 {
@@ -37,7 +39,7 @@
       apollo:{
         list: {
           query: timeGraphql.userList,
-          update: data => data.UserList.content,
+           update: data => data.UserList.content,
         },
       },
       created(){
@@ -60,6 +62,7 @@
         confime(){
           this.message.content = this.msg;
           this.message.receivers=this.tmp;
+          this.message.title=Date.parse(new Date());
           this.addTag();
 
         },

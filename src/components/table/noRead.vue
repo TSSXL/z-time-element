@@ -3,10 +3,12 @@
     <div style="height:100%;width:100%;overflow: auto;border-bottom: 1px solid black;" >
       <div v-for="(item,index) in list" :key="index">
         <span>{{item.content}}</span>
+        <div style="height:242px;width:100%;overflow: auto">
         <el-row style="height:40px;width:100%;border-bottom: 1px solid black" v-for="(info,index) in item.receivers" :key="index">
-          <el-col :span="14"><div style="height:40px;width:100%;margin-top: -1px;border-right: 1px solid black;line-height: 40px;text-indent: 50px;">{{info.user&&info.user.nickname}}</div></el-col>
-          <el-col :span="10"><div style="height:40px;width:100%;line-height: 40px;">{{isReaded(info.readed)}}</div></el-col>
+          <el-col :span="14"><div style="height:40px;width:100%;margin-top: -1px;border-right: 1px solid black;line-height: 40px;text-indent: 50px;font-weight: bolder;">{{info.user&&info.user.nickname}}</div></el-col>
+          <el-col :span="10"><div style="height:40px;width:100%;line-height: 40px;color:#ff0000;text-indent: 50px;">{{isReaded(info.readed)}}</div></el-col>
         </el-row>
+      </div>
       </div>
     </div>
   </div>
@@ -79,10 +81,6 @@
     border-bottom: 1px solid black;
     font-size: 18px;
     overflow: auto;
-  }
-  .footer{
-    height:60px;
-    width:100%;
   }
   span{
     display: inline-block;

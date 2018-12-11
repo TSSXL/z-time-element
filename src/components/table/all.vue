@@ -32,9 +32,20 @@
       apollo:{
         list: {
           query: timeGraphql.messageList,
-          // update: data=>data.MessageList.content,
           update:function(data){
             const arr=data.MessageList.content;
+            // const  compare=function (obj1,obj2) {
+            //   let val1=parseInt(obj1.title);
+            //   let val2=parseInt(obj2.title);
+            //   if (val1>val2) {
+            //     return -1;
+            //   }else if (val1<val2){
+            //     return 1;
+            //   }else {
+            //     return 0
+            //   }
+            // }
+            // return arr.sort(compare)
             return arr.reverse();
           },
           variables(){

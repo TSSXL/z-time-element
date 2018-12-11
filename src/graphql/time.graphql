@@ -50,6 +50,7 @@ mutation changeReaded($messageId:String!,$userId:String!){
 query messageList($qfilter:qfilter){
   MessageList(qfilter:$qfilter){
     content{
+       title
       content
       id
       receivers{
